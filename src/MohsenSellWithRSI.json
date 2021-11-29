@@ -1,0 +1,27 @@
+{
+    "INITIALBALANCE": {
+        "type": "number",
+        "label": "initial balance",
+        "value" : 100
+    },
+    "LOWERBAND": {
+        "type": "number",
+        "label": "lower band",
+        "value" :10
+    },
+    "UPPERBAND": {
+        "type": "number",
+        "label": "upper band",
+        "value" :90
+    },
+    "STARTTIME": {
+        "type": "date",
+        "label": "start from",
+        "value" :"2021-01-01T00:00:00Z"
+    },
+    "SYMBOL": {
+        "type": "text",
+        "label": "symbol",
+        "value" :"SHIBUSDT"
+    }
+}
