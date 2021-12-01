@@ -9,6 +9,11 @@
         "label": "lower band",
         "value" :10
     },
+    "GREENCANDLECOUNT": {
+        "type": "number",
+        "label": "green candle count",
+        "value" :2
+    },
     "UPPERBAND": {
         "type": "number",
         "label": "upper band",

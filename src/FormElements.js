@@ -12,9 +12,9 @@ export function Form(props) {
         <Formik
             {...props}
         >
-            <FormikForm className="needs-validation" novalidate="">
+            <FormikForm className="needs-validation" noValidate="">
                 {props.children}
-            <SubmitButton title="Submit" ></SubmitButton>
+                <SubmitButton title="Submit" ></SubmitButton>
             </FormikForm>
         </Formik>)
 }
@@ -23,10 +23,29 @@ export function TextField(props) {
     const { name, label, placeholder, ...rest } = props
     return (
         <>
-            {label && <label for={name}>{label}</label>}
+            {label && <label id={name}>{label}</label>}
             <Field
                 className="form-control"
                 type="text"
+                name={name}
+                id={name}
+                placeholder={placeholder || ""}
+                {...rest}
+            />
+            <ErrorMessage name={name} render={msg => <div style={{ color: 'red' }} >{msg}</div>} />
+        </>
+    )
+}
+
+export function NumberField(props) {
+    const { name, label, placeholder, ...rest } = props
+    return (
+        <>
+
+            {label && <label id={name}>{label}</label>}
+            <Field
+                className="form-control"
+                type="number"
                 name={name}
                 id={name}
                 placeholder={placeholder || ""}
@@ -41,7 +60,7 @@ export function SelectField(props) {
     const { name, label, options } = props
     return (
         <>
-            {label && <label for={name}>{label}</label>}
+            {label && <label id={name}>{label}</label>}
             <Field
                 as="select"
                 id={name}

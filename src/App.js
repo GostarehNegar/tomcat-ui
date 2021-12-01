@@ -1,12 +1,29 @@
-import React from "react";
-import MohsenSellwithGreenCandleCount from "./MohsenSellwithGreenCandleCount";
+import React, { useState, useEffect } from "react";
+import Bot from './components/bot'
 import Mohsen from './Mohsen'
-import MohsenSellWithRsi from './MohsenSellWithRSI'
 
 function App() {
-
+  const [bots, setBots] = useState([])
+  const [createNewBot, setCreateNewBot] = useState(false)
+  useEffect(() => {
+    fetch("http://localhost:8001/bots")
+      .then((response) => {
+        return response.json()
+      }).then((res) => {
+        setBots(res);
+      })
+  }, [])
   return (
-    <MohsenSellwithGreenCandleCount/>
+    <>
+      {bots.map((bot) => {
+        return (
+          <>
+            <Bot {...bot} />
+          </>
+        )
+      })}
+      {createNewBot ? <Mohsen /> : <button  onClick={() => { setCreateNewBot(!createNewBot) }}>Create New Bot</button>}
+    </>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, TextField, SelectField } from './FormElements';
+import { Form, TextField, SelectField, NumberField } from './FormElements';
 import * as Yup from 'yup';
 import formSchema from "./Mohsen.json";
 
@@ -32,7 +32,7 @@ function Mohsen() {
                 _validationSchema[key] = Yup.string().oneOf(formSchema[key].options.map(o => o.value));
             } else if (formSchema[key].type === "date") {
                 _validationSchema[key] = Yup.string()
-                    .test(dateString => 
+                    .test(dateString =>
                         /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/.test(dateString)
                     )
             }
@@ -52,10 +52,12 @@ function Mohsen() {
             options: elementSchema.options
         };
 
-        if (elementSchema.type === "text" || elementSchema.type === "number" || elementSchema.type === "date") {
+        if (elementSchema.type === "text" || elementSchema.type === "date") {
             return <TextField {...props} />
         }
-
+        if (elementSchema.type === "number") {
+            return <NumberField {...props} />
+        }
         if (elementSchema.type === "select") {
             return <SelectField  {...props} />
         }
@@ -63,7 +65,17 @@ function Mohsen() {
     }
 
     const onSubmit = (values, { setSubmitting, resetForm, setStatus }) => {
-        console.log(values);
+        fetch("http://localhost:8001/start",
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                method: 'POST',
+                body: JSON.stringify(values)
+            }
+        )
+
         setSubmitting(false);
     }
 
@@ -74,7 +86,7 @@ function Mohsen() {
                 initialValues={formData}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
-                
+
             >
                 {Object.keys(formSchema).map((key, ind) => (
                     <div key={key}>
